@@ -1,0 +1,9 @@
+#welcomeButton {
+    padding: 10px 20px;
+    background-color: blue;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}

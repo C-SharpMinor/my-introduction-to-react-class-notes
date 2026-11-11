@@ -1,0 +1,57 @@
+Conditional rendering
+Conditional rendering means displaying different JSX depending on a condition.
+
+React supports ordinary JavaScript approaches including if, the ternary operator, and &&. 
+
+
+====================
+// USING IF.... ELSE
+//Practice Task — Display a Login Message Using `if...else`**
+
+// In your existing React and TypeScript project, create a separate component that displays a message based on whether a user is logged in.
+
+// 1. Inside `src/conditional-rendering`, create a file named `LoginMessage.tsx`.
+// 2. Define an interface named `LoginMessageProps` containing `isLoggedIn`, typed as `boolean`.
+// 3. Create a function component named `LoginMessage`. Destructure `isLoggedIn` from its props and use `LoginMessageProps` to type the props.
+// 4. Inside the component, write an `if...else` statement. If `isLoggedIn` is `true`, return a paragraph displaying **Welcome back!** Otherwise, return a paragraph displaying **Please log in.**
+// 5. Export `LoginMessage` as the default export.
+// 6. In `App.tsx`, import `LoginMessage` from `"./components/LoginMessage"`.
+// 7. Make `App` return a `<main>` containing `<LoginMessage isLoggedIn={true} />`.
+// 8. Save your files and confirm that **Welcome back!** appears in the browser.
+// 9. Change the prop to `isLoggedIn={false}`, save, and confirm that **Please log in.** appears.
+
+// Reflection question — Why do we write `isLoggedIn={true}` with curly braces?
+
+
+===============
+// =================
+// B. Using the ternary operator
+// A ternary chooses between two values:
+// condition ? valueWhenTrue : valueWhenFalse
+// // **Practice Task — Display a Welcome Message Using the Ternary Operator**
+
+// // 1. Create `WelcomeStatus.tsx` inside `src/conditional-rendering`.
+// // 2. Define an interface named `WelcomeStatusProps` containing `isLoggedIn`, typed as `boolean`.
+// // 3. Create a function component named `WelcomeStatus`. Destructure `isLoggedIn` from its props and type the props using `WelcomeStatusProps`.
+// // 4. Return a `<p>` containing a ternary expression that displays **Welcome back!** when `isLoggedIn` is `true` and **Please log in.** when it is `false`.
+// // 5. Export `WelcomeStatus` as the default export.
+// // 6. In `App.tsx`, import `WelcomeStatus` from `"./components/WelcomeStatus"`.
+// // 7. Render `<WelcomeStatus isLoggedIn={true} />` inside `<main>`.
+// // 8. Save and check the browser. Change the prop to `false` and coßnfirm that the message changes.
+
+
+
+==============
+// C. Using &&
+// Use && when content should appear only when a condition is true:
+// {isLoggedIn && <button type="button">View Dashboard</button>}
+// **Practice Task — Show a Dashboard Button Using `&&`**
+
+// 1. Create `DashboardAccess.tsx` inside `src/conditional-rendering`.
+// 2. Define an interface named `DashboardAccessProps` containing `isLoggedIn`, typed as `boolean`.
+// 3. Create a function component named `DashboardAccess`. Destructure `isLoggedIn` from its props and type the props using `DashboardAccessProps`.
+// 4. Make the component return a `<section>` containing an `<h2>` displaying **Student Dashboard**.
+// 5. Below the heading, use `&&` to display a button only when `isLoggedIn` is `true`. Give the button `type="button"` and the text **View Dashboard**.
+// 6. Export `DashboardAccess` as the default export.
+// 7. In `App.tsx`, import `DashboardAccess` from `"./components/DashboardAccess"` and render `<DashboardAccess isLoggedIn={true} />` inside `<main>`.
+// 8. Save and confirm that the heading and button appear. Change the prop to `false` and confirm that only the heading appears.

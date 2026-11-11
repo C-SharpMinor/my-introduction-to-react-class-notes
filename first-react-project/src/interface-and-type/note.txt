@@ -1,0 +1,21 @@
+======CREATING AN INTERFACE AND A TYPE IN TYPESCRIPT=====
+
+An interface or a type alias can describe the structure an object should have. They tell TypeScript which properties to expect and what kind of value each property should contain.
+
+We will practise with ordinary objects first, before using these ideas with React props later on.
+
+Practice question: Describe a student
+In a TypeScript file, write code to:
+
+1. Create an interface named `Student` containing:
+   - `name`, which must be a string.
+   - `age`, which must be a number.
+   - `isEnrolled`, which must be a Boolean.
+2. Create an object called `studentOne` that follows this interface.
+3. Display the student’s details in the console.
+4. Rewrite the interface as a type alias named `StudentDetails`.
+5. Create another object called `studentTwo` using that type.
+
+You can practise in a `practice.ts` file in your TypeScript project.
+
+

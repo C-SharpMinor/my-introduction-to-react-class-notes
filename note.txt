@@ -1,0 +1,341 @@
+Introduction to React
+
+What is React?
+
+React is a JavaScript library  developed by Microsoft for building user interfaces.
+
+A user interface is the part of an application that users see and interact with, such as navigation menus, buttons, forms, and cards.
+
+React allows us to divide a page into smaller parts called components. For example, a course website could contain:
+- A header.
+- A navigation bar.
+- Course cards.
+- A registration form.
+- A footer.
+
+Why React was built
+As applications become more interactive, keeping their displayed content consistent with their data can become difficult.
+React provides a way to organise interfaces into components and update the displayed content when data changes.
+
+
+====================Introduction to TypeScript======================
+TypeScript extends JavaScript by adding a system for checking types before the code runs. TypeScript is a programming language built on JavaScript. It adds a type system that helps detect mistakes before your code runs.
+const name = "Bukola';
+const name: string = "Bukola";
+
+const age = 12;
+const age: number = 12;
+
+const isDamiPresent = false;
+const isDamiPresent: boolean = false;
+
+The annotations describe the values each variable should contain:
+Type	| Meaning	    |   Example
+string	| Text	        |  "Bukola"
+number	| A number	    |  12
+boolean | true or false |	false
+
+For example:
+let score: number = 85;
+
+score = 90;       // Valid
+score = "ninety"; // TypeScript reports an error
+
+Browsers run JavaScript. The development tools convert TypeScript into JavaScript.
+
+EXTENSIONS/INSTALLATIONS:
+1. Node.js with npm
+npm is a package manager commonly used with Node.js and JavaScript projects. It helps you install and manage packages—reusable code and tools written by other developers.
+
+In your React project, you use npm to:
+- Install the project’s dependencies:
+  npm install
+- Add a package, such as Tailwind CSS:
+  npm install tailwindcss @tailwindcss/vite
+- Run a command defined in package.json:
+  npm run dev
+  
+  In your Vite project, this starts the development server so you can view the application in your browser.
+For students: “npm helps us download the packages our application needs and run our project’s development commands.”
+
+npm normally comes with Node.js. Check that it is installed by running:
+npm -v
+
+============Benefits of using TypeScript with React==============
+
+TypeScript helps us check the data passed into components and identify mistakes while writing code. Editors can also provide useful suggestions based on those types. 
+
+
+-----------Understanding the project structure----------
+
+The generated files may vary slightly with the template version.
+----------------------------------------------------------------------
+File or folder	 |         Purpose
+----------------------------------------------------------------------
+node_modules	 |    Contains installed packages
+public	         |      Stores assets that can be referenced directly
+src	             |     Contains the application’s source code
+src/assets	     |     Stores assets imported into the application
+src/App.tsx	     |      Contains the main application component
+src/main.tsx	 |     Connects the React application to the page
+src/index.css	 |     Commonly contains global styles
+index.html	     |     Contains the HTML page and React root element
+package.json	 |      Records dependencies and project commands
+tsconfig…json	 |     Configures TypeScript
+vite.config.ts	 |     Configures Vite
+
+
+
+---------Differences between JSX and TSX---------
+-------FIRST, HOW TO CREATE .TS, .JSX AND .TSX files
+A file extension** is the part after the dot in a filename. It tells your development tools what kind of code to expect.
+
+COMPARE THE THREE
+| Extension | What to write inside it | Example                           |
+|-----------|-------------------------|-----------------------------------|
+| `.ts`     | TypeScript without JSX  | `const age: number = 22;`         |
+| `.jsx`    | JavaScript with JSX    | `return <h1>Hello</h1>;`          |
+| `.tsx`    | TypeScript with JSX     | A typed variable displayed inside `<h1>`|
+NOTE: .jsx: JavaScript with JSX is unique for its use of HTML markup style.
+These files are created in the same way. It is the extension at the end of the filename determines the file type.
+
+
+=======RAFCE AND COMPONENT EXPORT (BEFORE TAILWIND CSS)======
+**`rafce` is a shortcut that generates an arrow function component with a default export. We will use it to create components in separate files, then combine those components inside `App.tsx`.
+
+
+
+
+FIRST WEEKEND HOME TASK
+Weekend Home Task: Dream Destination Showcase
+
+Build a simple React and TypeScript webpage presenting a destination you would like to visit.
+You will practise:
+
+- Creating a React and TypeScript project with Vite.
+- Creating `.ts` and `.tsx` files.
+- Using basic TypeScript annotations.
+- Exporting and importing values.
+- Creating components with function declarations.
+- Creating an arrow-function component using `rafce`.
+- Creating a basic interface and object.
+- Rendering components inside `App.tsx`.
+- Styling React components with CSS.
+
+--------------
+Part 1: Create the Project
+Create a React and TypeScript project named: dream-destination
+
+Run:
+```bash
+npm create vite@latest dream-destination -- --template react-ts
+```
+
+Then run:
+```bash
+cd dream-destination
+npm install
+npm run dev
+```
+
+Open the local address displayed in the terminal.
+Use the alternative TypeScript setup instructions provided in class if you encounter the TypeScript compatibility error.
+
+
+--------------
+Part 2: Create the Destination Data
+Inside `src`, create: destination.ts
+
+Declare and export the following constants:
+- `destinationName`, explicitly typed as a `string`.
+- `country`, explicitly typed as a `string`.
+- `estimatedCost`, explicitly typed as a `number`.
+- `requiresVisa`, explicitly typed as a `boolean`.
+
+Choose a destination and fresh values of your own.
+Do not copy another student’s information.
+
+
+--------------
+## Part 3: Create `PageHeader` with a Function Declaration
+Inside `src`, create: PageHeader.tsx
+
+Create a component named `PageHeader` using a function declaration.
+It should return a `<header>` containing:
+- An `<h1>` displaying `My Dream Destination`.
+- A paragraph explaining that the page was created with React and TypeScript.
+
+Use the function-declaration structure studied in class:
+
+```tsx
+function ComponentName() {
+    return (
+        // JSX goes here
+    );
+}
+
+export default ComponentName;
+
+
+Export `PageHeader` as the default export.
+
+
+--------------
+Part 4: Create `TravelReason` with an Arrow Function
+
+Inside `src`, create: TravelReason.tsx
+
+Use the `rafce` snippet to generate an arrow-function component.
+
+=== How to generate the arrow function component structure
+In VS Code:
+1. Open `TravelReason.tsx`.
+2. Type: rafce
+3. Select the appropriate snippet or press Enter.
+The generated component should have this general structure:
+
+```tsx
+const TravelReason = () => {
+    return (
+        // JSX goes here
+    );
+};
+
+export default TravelReason;
+===
+
+Inside the component:
+1. Create a constant named `reason`.
+2. Explicitly type it as a `string`.
+3. Store a short reason why you would like to visit your chosen destination.
+4. Return a `<section>` containing:
+
+   - A heading displaying `Why I Want to Visit`.
+   - A paragraph displaying the value stored in `reason`.
+
+Keep the arrow-function structure generated by `rafce`.
+
+
+-----------
+Part 5: Create `TravelTip` with an Arrow Function
+
+Inside `src`, create: TravelTip.tsx
+Use `rafce` to generate the component.
+
+Inside the component:
+1. Create a constant named `tip`.
+2. Explicitly type it as a `string`.
+3. Store one useful travel tip in it.
+4. Return a `<section>` containing:
+
+   - A heading displaying `Travel Tip`.
+   - A paragraph displaying the value stored in `tip`.
+
+5. Keep the default export generated by `rafce`.
+Write the travel tip in your own words.
+
+
+------------
+Part 6: Practise a Simple Interface
+
+Inside `src`, create: travelPractice.ts
+Create an interface named `TravelPlan` containing:
+
+- `traveller`: string
+- `numberOfDays`: number
+- `hasPassport`: boolean
+
+Create an object named `myTravelPlan` that follows the interface.
+Use your own values and display the object in the browser console.
+Add the following at the bottom of the file:
+export {};
+
+
+-------------
+## Part 7: Complete `App.tsx`
+Open `App.tsx` and remove the starter content.
+Then:
+
+1. Import `PageHeader`.
+2. Import `TravelReason`.
+3. Import `TravelTip`.
+4. Import `destinationName`, `country`, `estimatedCost`, and `requiresVisa`.
+5. Import `travelPractice.ts` so its `console.log()` statement runs.
+6. Import `App.css`.
+7. Create the `App` component.
+8. Return a `<main>` with the class name `container`.
+
+Inside the `<main>`:
+
+- Render `PageHeader`.
+- Create a destination-details section.
+- Display the imported destination name.
+- Display the imported country.
+- Display the estimated cost.
+- Display whether a visa is required.
+- Render `TravelReason`.
+- Render `TravelTip`.
+
+
+-------------
+Part 8: EXTRA RESEARCH CHALLENGE: Add an Image
+Add one suitable image of your chosen destination.
+You may save the image inside: src/assets
+
+Import the image into `App.tsx` and display it inside the destination-details section.
+Give the image meaningful alternative text. 
+
+-------------
+Part 9: Style the Application
+Use `App.css` or `index.css` to style the application.
+
+Your design should include:
+- A page background colour.
+- A suitable font.
+- A centred main container.
+- A flexible width and `max-width`.
+- Padding and spacing.
+- A responsive destination image.
+- Background colours for the sections.
+- Rounded corners.
+- A subtle box shadow.
+- Styled headings and paragraphs.
+- A layout that displays properly on mobile and desktop screens.
+
+You may use Flexbox or Grid.
+Do not use Tailwind CSS for this assignment.
+
+-----------
+Part 10: Compare the Component Styles
+At the bottom of one of your `.tsx` files, add comments answering these questions:
+
+1. Which component did you create with a function declaration?
+2. Which components did you create with arrow functions?
+3. What did the `rafce` snippet generate?
+4. Do both component styles return JSX?
+5. Why must React component names begin with capital letters?
+
+
+-----------
+Before Submission
+
+Confirm that:
+
+- The React project runs without errors.
+- `PageHeader` was created with a function declaration.
+- `TravelReason` was created as an arrow-function component using `rafce`.
+- `TravelTip` was created as an arrow-function component using `rafce`.
+- All components appear on the webpage.
+- The destination information comes from `destination.ts`.
+- The destination image appears correctly.
+- The interface and object are written correctly.
+- The object appears in the browser console.
+- All imports and exports work correctly.
+- The page is responsive.
+- There are no errors in the browser console.
+
+Submission
+Push the completed project to a public GitHub repository.
+Use a clear commit message, such as: Complete dream destination React project
+
+Share the repository link for review and be prepared to explain your code during the next class.

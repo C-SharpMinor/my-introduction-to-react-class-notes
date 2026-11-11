@@ -1,0 +1,53 @@
+==========HOW TO CREATE A FUNCTION COMPONENT===========
+A function component is a JavaScript function that returns JSX describing what should appear on the page.
+
+To create one:
+1. Write function.
+2. Give it a name that starts with a capital letter.
+3. Add parentheses () and curly braces {}.
+4. Use return to return JSX.
+function Header() {
+    return <h1>Tech Studio Courses</h1>;
+}
+
+Part	                         Meaning
+function	                    Declares the function.
+Header	                       The component’s name;it starts with a capital letter.
+()	                            Where parameters can go; this component has none.
+{ ... }	                        Contains the function’s code.
+return	                        Specifies the JSX the component returns.
+<h1>Tech Studio Courses</h1>	The JSX describing the heading.
+
+
+To display the component, use its name as a JSX tag inside App:
+function Header() {
+    return <h1>Tech Studio Courses</h1>;
+}
+
+function App() {
+    return (
+        <main>
+            <Header />
+        </main>
+    );
+}
+
+export default App;
+
+<Header /> tells React to render the Header component.
+
+When returning JSX across multiple lines, put it inside parentheses:
+function CourseCard() {
+    return (
+        <section className="course-card">
+            <h2>React Fundamentals</h2>
+            <p>Learn how to build interfaces using React.</p>
+        </section>
+    );
+}
+
+Keep the opening parenthesis on the same line as return.
+
+
+
+Create a file named `DailyMessage.jsx` inside `src/components`. Write a function component named `DailyMessage` that returns a `<section>` containing an `<h2>` displaying **“Today’s Reminder”** and a paragraph displaying **“Practise a little every day.”** Export it as the default export. Import and render it inside `App.tsx`, then confirm that its content appears in the browser.

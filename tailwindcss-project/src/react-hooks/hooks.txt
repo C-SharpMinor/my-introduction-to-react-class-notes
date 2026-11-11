@@ -1,0 +1,135 @@
+REACT HOOKS
+What is a React Hook?
+A hook is a React function that gives a component access to features such as remembering state, running effects and keeping a reference to an element.
+
+Hooks
+-----------------------------------------------------------------------------
+| Hook          | What it does in today’s example                          |
+|---------------|----------------------------------------------------------|
+| `useState`    | Remembers whether registration is open or closed         |
+| `useEffect`   | Keeps the browser tab title updated with the registration message|
+| `useRef`      | Gives us access to an input so we can focus it           |
+| A custom hook | Lets us reuse the registration state and its handler functions  |
+------------------------------------------------------------------------------
+
+1. useState 
+Revising useState with Registration Status:
+
+useState gives a component a value it can remember. Using the RegistrationStatus.tsx task:
+status holds the current registration message. setStatus lets us change that message. React renders the component again after a state update so the paragraph can show the new message.
+
+
+**
+const [status, setStatus] = useState("Registration is Closed");
+**
+-----------------------------------------------------------------------
+| Part                       | Meaning                                |
+|----------------------------|----------------------------------------|
+| `status`                   | The current state value                |
+| `setStatus`                | The function used to update that value |
+| `"Registration is Closed"` | The initial value                      |
+-----------------------------------------------------------------------
+So, when someone clicks Open Registration:
+1. The click runs the openRegistration function.
+2. That function calls setStatus("Registration is open").
+3. React renders the component again, and the paragraph shows the message for "open".
+
+The event handler answers “What should happen when the button is clicked?” The JSX answers “What should the page show for the current state?”
+
+
+TO TRACE ONE CLICK,
+Click → handler runs → setter updates state → React renders again → paragraph displays the new state.
+
+
+=============
+3. Understanding component lifecycle (Using RegistrationStatus.tsx)
+--------------------------------------------------------------------------
+| Term    | Simple explanation                     | Example               |
+|---------|----------------------------------------|------------------------|
+| Mount   | The component is added to the page     | `RegistrationStatus` first appears |
+| Update  | React renders the component again      | The registration status changes    |
+| Unmount | The component is removed from the page | We hide `RegistrationStatus`       |
+----------------------------------------------------------------------------
+
+The next exercise will let us observe all three.
+
+------------
+A. useEffect
+useEffect keeps the browser tab title in sync:
+
+- Our paragraph displays the registration message through JSX. We also want the browser tab to display that message. An effect can keep document.title in sync with the current status.
+
+- An effect can also return a cleanup function. React runs cleanup before rerunning an effect whose dependencies changed, and when the component is removed.
+
+------------------------------------------------------------------------------
+| Code                      | Meaning                                        |
+|---------------------------|------------------------------------------------|
+| `document.title = status` | Updates the browser tab title                  |
+| `[status]`                | Makes the effect respond when `status` changes |
+| `return () => { ... }`    | Provides the cleanup function                  |
+------------------------------------------------------------------------------
+
+Outcome: The paragraph and browser tab display the same registration message.
+
+
+=============
+NEXT: SHOWING MOUNTING AND UNMOUNTING.
+Practice Task 3 — Show Mounting and Unmounting
+1. Open App.tsx.
+2. Import useState.
+3. Inside App, create showRegistration and setShowRegistration using useState(true).
+4. Write a named function called toggleRegistration.
+5. Inside it, write setShowRegistration(previous => !previous).
+6. Add a button labelled Show or Hide Registration. Connect it to toggleRegistration.
+7. Render the registration component only when showRegistration is true.
+8. Open registration, hide the component, then show it again.
+
+This version removes and restores the <section>. RegistrationStatus itself stays mounted, so its registration state is preserved. If you open registration, hide it and show it again, it will still display Registration is Open.
+
+
+previous is the previous boolean state value. !previous switches true to false, or false to true.
+Expected result: Hiding the component removes it and restores the previous tab title. Showing it again creates a fresh component whose registration starts closed.
+============
+
+Let us compare the dependency patterns:
+-------------------------------------------------------------------
+| Dependency argument    | When the effect runs                   |
+|------------------------|----------------------------------------|
+| `[]`                   | On mounting                            |
+| `[status]`             | On mounting and after `status` changes |
+| No dependency argument | After every committed render           |
+-------------------------------------------------------------------
+
+With StrictMode, React may run an extra setup and cleanup cycle during development. Keep that in mind if students see repeated effect logs.
+
+
+====================
+NEXT IS useRef.
+useRef gives us access to an input
+We want a button that moves the cursor into the name input. A ref lets the handler access that particular input element.
+
+const nameInputRef = useRef<HTMLInputElement>(null);
+
+---------------------------------------------------------------------------
+| Part               | Meaning                                            |
+|--------------------|----------------------------------------------------|
+| `nameInputRef`     | The ref we created                                 |
+| `HTMLInputElement` | The kind of element this ref will hold             |
+| `null`             | Its initial value, before React attaches the input |
+| `.current`         | The property that holds the input element          |
+---------------------------------------------------------------------------
+
+React fills .current when we attach the ref to the input. A ref also keeps its value between renders, and changing .current does not cause a render.
+
+
+// Practice Task 4 — Focus the Name Input
+// 1. Open RegistrationStatus.tsx.
+// 2. Add useRef to the React import.
+// 3. Inside the component, create nameInputRef using useRef<HTMLInputElement>(null).
+// 4. Create a named function called focusNameInput.
+// 5. Inside the function, write nameInputRef.current?.focus().
+// 6. Below the registration buttons, add a <div>.
+// 7. Inside the <div>, add a label displaying Full Name. Give it htmlFor="fullName".
+// 8. Add a text input with id="fullName" and ref={nameInputRef}.
+// 9. Add a button labelled Focus Name Field. Give it type="button" and connect it to focusNameInput.
+// 10. Click the button, then start typing.

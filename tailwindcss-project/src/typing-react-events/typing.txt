@@ -1,0 +1,22 @@
+Typing events with TypeScript
+An event handler can receive an event object containing information about the interaction.
+
+The parameter can be named event or e. Choose one name and use it consistently.
+
+The general pattern is:
+React.EventType<ElementType>
+
+The event type describes the interaction. The element type describes the element handling it.
+-------------------------------------------------------------
+Type	                              |  Example use
+-------------------------------------------------------------
+React.MouseEvent<HTMLButtonElement>.  | Button click
+React.ChangeEvent<HTMLInputElement>	  |  Text input change
+React.ChangeEvent<HTMLSelectElement>. |	Dropdown change
+React.FormEvent<HTMLFormElement>	  |  Form submission
+-------------------------------------------------------------
+
+The examples below use:
+import type * as React from "react";
+
+This makes the React namespace available for type annotations.

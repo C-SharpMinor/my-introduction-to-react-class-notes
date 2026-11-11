@@ -1,0 +1,3 @@
+Event handling in React
+An event is something that happens during interaction with a webpage.
+An event handler is a function that runs in response.

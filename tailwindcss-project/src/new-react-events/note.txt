@@ -1,0 +1,53 @@
+REACT EVENTS
+
+React events are actions that happen when users interact with your webpage, such as clicking a button, typing in an input, or submitting a form.
+
+You respond to an event in react by providing an event handler: a function that runs when the event happens.
+In React, event names use camelCase, such as onClick, onChange, and onSubmit.
+
+1. Click and double click events
+-------------------------------------------------------
+| Event           | When it happens                   |
+|-----------------|-----------------------------------|
+| `onClick`       | When an element is clicked        |
+| `onDoubleClick` | When an element is double-clicked |
+-------------------------------------------------------
+
+
+2. Mouse events
+These respond to mouse movement over an element.
+-------------------------------------------------------------
+| Event          | When it happens                          |
+|----------------|------------------------------------------|
+| `onMouseEnter` | When the mouse pointer enters an element |
+| `onMouseLeave` | When the mouse pointer leaves an element |
+| `onMouseMove`  | When the mouse moves within an element   |
+-------------------------------------------------------------
+
+
+3. Keyboard events
+------------------------------------------------
+| Event       | When it happens                |
+|-------------|--------------------------------|
+| `onKeyDown` | When a key is pressed down     |
+| `onKeyUp`.  | When a pressed key is released |
+------------------------------------------------
+===============================================
+
+
+4. Change events
+onChange responds when a user changes a form control.
+For text inputs in React, it runs as the user types or otherwise edits the value.
+
+
+5. Input events
+onInput also responds when the user edits an input’s value.
+For ordinary React text-input handling, onChange is the usual choice. Unlike the native JavaScript "change" event for text inputs, React’s onChange runs as the user edits the text.
+
+
+6. Submit events
+onSubmit runs when a form is submitted—for example, by clicking its submit button or pressing Enter in an appropriate input.
+
+---event.preventDefault() prevents the form’s default submission behaviour, which would normally navigate away or reload the page.
+---Attach onSubmit to the form so it handles submission through both the button and keyboard
+

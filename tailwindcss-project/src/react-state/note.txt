@@ -1,0 +1,32 @@
+Introduction to State in React
+Learning goal: By the end of this lesson, students should be able to use useState to store a value and update what appears on the screen when a button is clicked.
+1. What is state?
+State is a value a component remembers between renders. When you update state, React renders the component again with the new value and updates the screen where needed.
+
+We already know how to use onClick to show an alert. This time, the button will change a message on the page itself.
+2. Create your first state variable
+First, import useState from React. Then call it inside your component.
+import { useState } from "react";
+
+const [message, setMessage] = useState("Click the button to see a message.");
+const [message, setMessage] = useState("");
+
+-----------------------------------------------------------------------------
+| Part                                   | What it does |
+|----------------------------------------|---------------------------------|
+| `message`                              | Holds the current message.      |
+| `setMessage`                   | Updates the message for the next render.|
+| `"Click the button to see a message."` | Sets the message shown when the component first appears. |
+-----------------------------------------------------------------------------
+
+
+**What happens when the user clicks?** That’s the job of the event handler. **What should the page display after the click?** That’s where React state comes in.
+
+
+| Question            | Plain JavaScript                      | React     |
+|---------------------|---------------------------------------|-----------|
+| How do we respond to a click? | Use `addEventListener("click", ...)`. | Pass a handler to `onClick`. |
+| What does the handler update? | The paragraph’s `textContent`. | The component’s `message` state through `setMessage`. |
+| How does the new message appear? | The handler changes the paragraph directly. | React renders the component with the new state and updates the paragraph that displays `{message}`. |
+
+
