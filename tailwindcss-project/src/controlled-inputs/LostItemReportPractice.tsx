@@ -46,32 +46,36 @@ const LostItemReportPractice = () => {
 
   return (
     <div>
-        <form>
-            <h1>Report a Lost Item</h1>
+        <form className="mx-auto w-full max-w-sm bg-blue-200 p-4 flex flex-col gap-2 rounded-xl shadow-2xl shadow-gray-400 mb-10 justify-center">
+            <h1 className="text-center font-bold text-xl">Report a Lost Item</h1>
 
-            <label htmlFor="itemName">Item Name</label>
+            
+            <label htmlFor="itemName" className="text-lg">Item Name</label>
             <input 
             type="text"  
             id="itemName"
             value={itemName}
             onChange={(event) => setItemName(event.currentTarget.value)}
+            className="border border-gray-500 outline-0 bg-white flex items-center justify-center"
             />
             <p>Item preview</p>
             <p>{itemName}</p>
 
-            <label htmlFor="contactEmail">Contact Email</label>
+            <label htmlFor="contactEmail" className="text-lg">Contact Email</label>
             <input 
             type="email"  
             id="contactEmail"
             value={contactEmail}
             onChange={(event) => setContactEmail(event.currentTarget.value)}
+            className="border border-gray-500 outline-0 bg-white"
             />
 
-            <label htmlFor="location">Last seen location</label>
+            <label htmlFor="location" className="text-lg">Last seen location</label>
             <select
             id="location"
             value={location}
             onChange={(event) => setLocation(event.currentTarget.value)}
+            className="border border-gray-500 outline-0 bg-white"
             >  
             {locations.map(place => (
                 <option 
@@ -84,13 +88,15 @@ const LostItemReportPractice = () => {
             </select>
 
 
-            <input 
+           <div>
+             <input 
             type="checkbox" 
             id="isConfirmed" 
             checked={isConfirmed} 
             onChange={(event) => setIsConfirmed(event.currentTarget.checked)}
             />
-            <label htmlFor="isConfirmed"> I confirm these details are accurate</label>   
+            <label htmlFor="isConfirmed" className="text-lg"> I confirm these details are accurate</label>   
+           </div>
             <p>{isConfirmed ? "Details confirmed" : "Please confirm your details"}</p>      
         </form>  
     </div>
