@@ -54,48 +54,82 @@
 // 9. Add a button labelled Focus Name Field. Give it type="button" and connect it to focusNameInput.
 // 10. Click the button, then start typing.
 
-// TASK/STEP 4 - Add useRef to react - not added yet
-import { useState, useEffect } from "react";
+// FEEDBACK ON TASK 4:
+// Clicking Focus Name Field moves the cursor into the Full Name input. The user can immediately start typing without clicking inside the input first.
+// The button’s handler uses nameInputRef.current?.focus() to focus that input.
+// Click Focus Name Field, then start typing. The cursor moves into the input because nameInputRef.current holds that input element.
+
+
+// Practice Task 5 WAS CREATING THE CUSTOM HOOK;
+
+// Practice Task 6 — Use the Custom Hook
+// 1. Open RegistrationStatus.tsx.
+// 3. Import useRegistrationStatus from "./hooks/useRegistrationStatus".
+// 4. Replace the component’s useState declaration with the line below.
+//    const {
+//      status,
+//      openRegistration,
+//      closeRegistration,
+//    } = useRegistrationStatus();
+// 5. Remove the openRegistration and closeRegistration function definitions from the component because the hook now supplies them.
+// 6. Keep the effect, ref, focus handler and JSX in place.
+// 7. Test all three buttons again.
+// Expected result: The registration buttons, browser tab title and focus button still work.
+
+
+// TASK/STEP 4 - Add useRef to react
+import { useState, useRef } from "react";
+import useRegistrationStatus from "./useRegistrationStatus";
 
 
 const RegistrationStatus = () => {
-
+    //  The react state is removed to be added in custom hook. Then, it is imported from the custom hook as an object introduced using const
     // set state variable and setter with usestatae having a default value
-    const [status, setStatus] = useState("Registration is Closed");
+    // const [status, setStatus] = useState("Registration is Closed");
+    const {
+     status,
+     openRegistration,
+     closeRegistration,
+   } = useRegistrationStatus();
+
+
 
     // TASK/STEP 3: Mount and unmount - 1. show/hide Registration - Add the visibility state and toggle function
     // 1. First, create visibility showRegistration state and its setter
     const [showRegistration, setShowRegistration] = useState(true);
 
      // STEP 4: ii. create Ref for the name input 
-    // const nameInputRef = useRef<HTMLInputElement>(null); to be continued in class tomorrow.
-
+    const nameInputRef = useRef<HTMLInputElement>(null); 
+    
       // 2. secondly, create toggleRegistration function
     const toggleRegistration = () => {
         setShowRegistration(previous => !previous);
     }
 
 
+//   //  Task 2 - Step 2: Use Effect Beginning
+//     useEffect(() => {
+//         const previousTitle = document.title;
+//         document.title = status;
 
+//         // return a cleanup arrow function - sets document.title back to previousTitle
+//        return () => {
+//         document.title = previousTitle;
+//        };
+//     }, [status]); // Giving the effect a dependency array containing status. End of use effect.
 
-  //  Task 2 - Step 2: Use Effect Beginning
-    useEffect(() => {
-        const previousTitle = document.title;
-        document.title = status;
+    // These also removed and added in the custom hook
+    // const openRegistration = () => {
+    //     setStatus("Registration is Open");
+    // }
 
-        // return a cleanup arrow function - sets document.title back to previousTitle
-       return () => {
-        document.title = previousTitle;
-       };
-    }, [status]); // Giving the effect a dependency array containing status. End of use effect.
+    // const closeRegistration = () => {
+    //     setStatus("Registration is Closed");
+    // }
 
-    
-    const openRegistration = () => {
-        setStatus("Registration is Open");
-    }
-
-    const closeRegistration = () => {
-        setStatus("Registration is Closed");
+    // STEP 4: iii. create a focus arrow function to focus the name input when the button is clicked.
+    const focusNameInput = () => {
+        nameInputRef.current?.focus();
     }
 
 
@@ -129,8 +163,12 @@ const RegistrationStatus = () => {
             >Close Registration</button>
 
 
-            <div>
+            {/* STEP 4 iv. Create the name input and button that will focus it */}
+            <div >
+                <label htmlFor="fullName">Full Name</label>
+                <input type="text" id="fullName" ref={nameInputRef} className="bg-cyan-600 border border-b-amber-600"/>
 
+                <button type="button" onClick={focusNameInput} className="bg-amber-400 px-5 py-2">Focus Name Field</button>
             </div>
         </section>
          )}

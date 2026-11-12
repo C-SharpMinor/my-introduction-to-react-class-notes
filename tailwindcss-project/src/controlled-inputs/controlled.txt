@@ -1,0 +1,4 @@
+CONTROLLED INPUT
+
+A controlled input displays a value stored in React state. When the user types, an event handler updates the state, and React displays the updated value.
+

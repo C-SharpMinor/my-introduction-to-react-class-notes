@@ -133,3 +133,19 @@ React fills .current when we attach the ref to the input. A ref also keeps its v
 // 8. Add a text input with id="fullName" and ref={nameInputRef}.
 // 9. Add a button labelled Focus Name Field. Give it type="button" and connect it to focusNameInput.
 // 10. Click the button, then start typing.
+
+// FEEDBACK ON TASK 4:
+// Clicking Focus Name Field moves the cursor into the Full Name input. The user can immediately start typing without clicking inside the input first.
+// The button’s handler uses nameInputRef.current?.focus() to focus that input.
+// Click Focus Name Field, then start typing. The cursor moves into the input because nameInputRef.current holds that input element.
+
+
+
+==================
+CUSTOM HOOK: 
+NEXT, Let's create a custom hook from the familiar registration logic.
+We already have logic for remembering the registration status, opening registration and closing registration. We can move those three pieces into a custom hook and reuse them.
+
+A custom hook’s name starts with use. It returns the values and functions that the component needs. Each component calling the hook gets its own state.
+
+

@@ -16,6 +16,13 @@ import LogInmessage from "./conditional-rendering/LogInMessage";
 import WelcomeStatus from "./conditional-rendering/WelcomeStatus";
 import DashboardAccessProps from "./conditional-rendering/DashboardAccessProps";
 import RegistrationStatus from "./react-hooks/RegistrationStatus";
+import SecondWorkshop from "./react-hooks/SecondWorkshop";
+import NavigationBar from "./list-map-rendering/NavigationBar";
+import PropertyList from "./list-map-rendering/PropertyList";
+// import ItemNameInput from "./controlled-inputs/ItemNameInput";
+import ConfirmationCheckbox from "./controlled-inputs/ConfirmationCheckbox";
+import NewItemNameInput from "./controlled-inputs/NewItemNameInput";
+import LostItemReportPractice from "./controlled-inputs/LostItemReportPractice";
 
 
 function App() {
@@ -132,6 +139,20 @@ function App() {
     <DashboardAccessProps isLoggedIn={false} />
 
     <RegistrationStatus />
+
+    <SecondWorkshop />
+
+    <NavigationBar />
+
+    <PropertyList />
+
+    {/* <ItemNameInput /> */}
+
+    <ConfirmationCheckbox />
+
+    <NewItemNameInput />
+
+    <LostItemReportPractice />
 
       </section>
     </>

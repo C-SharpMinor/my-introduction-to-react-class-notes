@@ -1,0 +1,17 @@
+8. Rendering lists dynamically
+Instead of manually writing every item, we can store data in an array and use map() to create JSX.
+
+We use .map() because it returns a new array of JSX elements that React can display.
+We use .map() when we have an array of data and want to display a similar HTML structure for each item.
+
+For example:
+Part of a webpage	   |          What we can map
+Navigation bar	       |       An array of navigation links
+Courses section	       |   An array of courses into course cards
+Online shop	           |      An array of products into product cards
+Blog page	           |      An array of articles into article previews
+Testimonials section.  |        An array of reviews
+Form	          An array of options into dropdown options, checkboxes, or radio buttons
+
+In rendering, map can be used in redering strings and rendering objects as reusable components.
+
