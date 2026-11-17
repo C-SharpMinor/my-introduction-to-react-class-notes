@@ -1,0 +1,664 @@
+Introduction to React Router**
+Routing means deciding which page to display based on the URL.
+
+For example:
+-------------------------------------------------------
+| URL path             | Page displayed               |
+|----------------------|------------------------------|
+| `/`                  | Home                         |
+| `/about`             | About                        |
+| `/courses`           | Courses                      |
+| `/courses/html`      | Details about HTML           |
+| `/dashboard/profile` | Profile inside the dashboard |
+-------------------------------------------------------
+Without routing, you might render several components together:
+
+function App() {
+  return (
+    <>
+      <Home />
+      <About />
+      <Courses />
+    </>
+  );
+}
+
+This displays all three components on the same page.npm run dev
+
+
+With routing, we describe which component should appear at each URL.
+React Router connects URL paths to React components. Its declarative approach uses components such as `BrowserRouter`, `Routes`, and `Route`. You already know how to create components. Routing lets us choose which component to show when someone visits a particular address.
+
+Learning goals
+By the end, you should be able to:
+1. Set up browser routing.
+2. Connect paths to page components.
+3. Navigate using `Link`.
+4. Create routes containing changing values.
+5. Read route parameters.
+6. Display child pages inside a shared layout.
+7. Navigate or redirect users to another page.
+
+
+-------------------
+2. Set up browser routing
+Use an existing Vite React and TypeScript project.
+In the project terminal, run: 
+npm install react-router
+
+This lesson uses imports from `"react-router"`.
+
+==========WHAT DOES BROWSER ROUTER DO?=============
+What does BrowserRouter do?
+`BrowserRouter` connects React Router to the browser’s address bar and history. This allows routing to work with normal paths and the browser’s Back and Forward buttons.
+
+========HOW TO ENABLE ROUTING ==========
+Guided task 1 — Enable routing
+1. Open `src/main.tsx`.
+2. Import `BrowserRouter` from `"react-router"`.
+3. Wrap `<App />` inside `<BrowserRouter>`.
+4. Keep the existing CSS import.
+
+Your file should look like this:
+
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router";
+import "./index.css";
+import App from "./App.tsx";
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StrictMode>
+);
+
+
+Explanation of the arrangement:
+<BrowserRouter>
+  <App />
+</BrowserRouter>
+`App` and its child components can now use React Router.
+Expected outcome: The application still opens normally. We have enabled routing, but we have not created any routes yet.
+
+
+========CREATE PAGES AND CONNECT THEM TO ROUTES=========
+3. Create pages and connect them to routes
+A page component is an ordinary React component that we choose to display at a URL.
+
+Guided task 2 — Create Home and About pages
+1. Inside `src`, create a folder named `pages`.
+2. Inside `pages`, create `Home.tsx`.
+3. Create a component named `Home`.
+4. Return a heading and a paragraph.
+5. Export it as the default export.
+`src/pages/Home.tsx`
+
+
+8. Open `App.tsx`.
+9. Replace its contents with:
+import { Routes, Route } from "react-router";
+import Home from "./pages/Home";
+
+const App = () => {
+  return (
+    <main>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </main>
+  );
+};
+
+export default App;
+
+=========EACH PART EXPLAINED==========
+--------------------------------------------------------------------------
+| Code                  |                      Meaning                  |
+|------------|----------------------------------------------------------|
+| `<Routes>`            | Groups the route definitions and matches the current URL |
+| `<Route>`             | Defines a route                                          |
+| `path="/about"`       | The URL path to match                                    |
+| `element={<About />}` | The component to display                                 |
+---------------------------------------------------------------------------
+
+=====TAKE NOTE =====
+<Route path="/about" element={<About />} />
+“When the path is `/about`, IT MEANS display the About component.”
+
+Test
+1. Run `npm run dev` if the development server is not running.
+2. Open the address shown in the terminal.
+3. Visit `/`.
+4. Change the address to `/about`.
+
+Expected outcome: Each URL displays its corresponding page.
+
+
+======= SHORT PRACTICE TASK
+Practice task — Add Contact
+1. Create `Contact.tsx` inside `src/pages`.
+2. Create a component named `Contact`.
+3. Display the heading **Contact Us**.
+4. Display the paragraph **Email: hello@example.com**.
+5. Export the component.
+6. Import it into `App.tsx`.
+7. Add a route with the path `/contact`.
+8. Set its `element` to `<Contact />`.
+9. Visit `/contact` in the browser.
+
+Expected outcome: The Contact page appears at `/contact`.
+
+
+============ NAVIGATION USING LINK =============
+4. Navigation using `Link`
+Typing URLs manually works, but users need clickable navigation.
+Use `Link` for navigation between routes in the application.
+
+<Link to="/about">About</Link>
+
+- `Link` creates a navigational link.
+- `to` specifies the destination.
+- `About` is the visible text.
+
+----------
+For ordinary internal clicks, `Link` changes the route without requesting a whole new HTML document. Use a normal `<a>` element for external destinations.
+
+<Link to="/about">About our portal</Link>
+
+E.g.
+<a href="https://www.wikipedia.org">
+  Visit Wikipedia
+</a>
+----------
+
+
+Guided task 3 — Create reusable navigation
+1. Inside `src`, create a folder named `components` if it does not already exist.
+2. Create `NavigationMenu.tsx` inside that folder.
+3. Import `Link`.
+4. Create a component named `NavigationMenu`.
+5. Add links to Home, About, and Contact.
+6. Export the component.
+
+
+------
+7. Update `App.tsx`:
+
+import { Routes, Route } from "react-router";
+import NavigationMenu from "./components/NavigationMenu";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+
+const App = () => {
+  return (
+    <>
+      <NavigationMenu />
+
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </main>
+    </>
+  );
+};
+
+export default App;
+----------
+
+=====Why place navigation outside `Routes`?=====
+We want it to remain visible while the matched page changes.
+
+Expected outcome:
+- Clicking About changes the URL to `/about`.
+- The About page appears.
+- Navigation remains visible.
+- Back and Forward move through visited pages.
+
+
+======Practice task — Add Courses=====
+1. Create `Courses.tsx` inside `src/pages`.
+2. Make it display the heading **Our Courses**.
+3. Export it.
+4. Import it into `App.tsx`.
+5. Add a `/courses` route inside `Routes`.
+6. Add a Courses link to `NavigationMenu.tsx`.
+7. Click the link to test it.
+
+---
+
+============DYNAMIC ROUTES============
+5. Dynamic routes
+A dynamic route contains a part that can change.
+
+Compare:
+<Route path="/about" element={<About />} />
+
+with:
+
+<Route path="/courses/:courseId" element={<CourseDetails />} />
+
+`/about` is fixed.
+
+In `/courses/:courseId`, the value after `/courses/` can vary.
+------------------------------------------
+| URL              | Value of `courseId` |
+|------------------|---------------------|
+| `/courses/html`  | `"html"`            |
+| `/courses/css`   | `"css"`             |
+| `/courses/react` | `"react"`           |
+------------------------------------------
+The colon introduces a dynamic segment in the route definition. A real URL uses a value such as `html`.
+
+---------
+
+Guided task 4 — Create a dynamic route**
+1. Create `CourseDetails.tsx` inside `src/pages`.
+2. Add the component that returns a section containing a heading: Course Details and a paragraph: This page will display the selected course.
+3. Import `CourseDetails` into `App.tsx`.
+4. Add this route inside `Routes`:
+<Route
+  path="/courses/:courseId"
+  element={<CourseDetails />}
+/>
+
+5. Visit `/courses/html`.
+6. Visit `/courses/react`.
+
+Expected outcome: Both URLs display `CourseDetails`.
+At this point, both show the same text because we have not read the changing value yet.
+--
+const CourseDetails = () => {
+  return (
+    <section>
+      <h1>Course Details</h1>
+      <p>This page will display the selected course.</p>
+    </section>
+  );
+};
+
+export default CourseDetails;
+
+==========ROUTE PARAMETERS WITH 'useParams'
+6. Route parameters with `useParams`
+A route parameter is a value captured from a dynamic part of the URL.
+
+- Dynamic route: Defines where a changing value belongs.
+-Route parameter: The actual value captured there.
+Use `useParams()` to read that value.
+
+
+--------
+Guided task 5 — Display the selected course
+1. Open `CourseDetails.tsx`.
+2. Import `useParams`.
+3. Call it inside the component.
+4. Destructure `courseId`.
+5. Display it in a paragraph.
+-
+import { useParams } from "react-router"
+
+const CourseDetails = () => {
+
+   const { courseId } = useParams();
+
+  return (
+    <section>
+        <h2>Course Details</h2>
+        <p>Selected course: {courseId}</p>      
+    </section>
+  )
+}
+
+export default CourseDetails
+--------
+const { courseId } = useParams();
+“Read the route parameters and take the value named `courseId`.”
+The name must match the route definition:
+path="/courses/:courseId"
+
+For `/courses/react`:
+courseId === "react"
+
+
+-------------- Populate Courses with course list
+// 4. Make the component return a `<section>`.
+// 5. Inside the section, add:
+//    - An `<h1>` displaying **Our Courses**.
+//    - A paragraph displaying **Select a course to view its details.**
+//    - A `<ul>` containing two `<li>` elements.
+// 6. Inside the first `<li>`, add a `Link` displaying **HTML**, with its `to` prop set to `"/courses/html"`.
+// 7. Inside the second `<li>`, add a `Link` displaying **CSS**, with its `to` prop set to `"/courses/css"`.
+
+Guided task 6 — Link to different courses**
+
+Replace `Courses.tsx` with:
+import { Link } from "react-router";
+
+const Courses = () => {
+  return (
+    <section>
+      <h1>Our Courses</h1>
+
+      <ul>
+        <li>
+          <Link to="/courses/html">View HTML</Link>
+        </li>
+
+        <li>
+          <Link to="/courses/css">View CSS</Link>
+        </li>
+
+        <li>
+          <Link to="/courses/react">View React</Link>
+        </li>
+      </ul>
+    </section>
+  );
+};
+
+export default Courses;
+--------
+Expected outcome: Clicking each link displays its value on the same reusable details page.
+
+--------
+Extend the example — Find actual course information
+
+// Part 3 — Display Course Information Using a Dynamic Route
+
+// Update your existing `CourseDetails.tsx` so it finds and displays information about the course specified in the URL.
+
+// 1. Open `src/pages/CourseDetails.tsx`.
+// 2. Import `Link` and `useParams` from `"react-router"`.
+// 3. Create an arrow function component named `CourseDetails`.
+// 4. Inside the component, call `useParams()` and destructure `courseId` from its returned object.
+// 5. Create an array named `courses` containing these objects:
+// ---------------------------------------------------------
+//    | id        | title                 | duration    |
+//    |-----------|-----------------------|-------------|
+//    | `"html"`  | `"HTML Fundamentals"` | `"2 weeks"` |
+//    | `"css"`   | `"CSS Styling"`       | `"3 weeks"` |
+//    | `"react"` | `"React Development"` | `"4 weeks"` |
+
+// 6. Create a variable named `selectedCourse`. Use `courses.find()` to find the course whose `id` matches `courseId`.
+// 7. Write an `if` statement that checks whether `selectedCourse` was not found. If it was not found, return a `<section>` containing:
+//    - An `<h1>` displaying **Course not found**.
+//    - A `Link` displaying **Back to courses**, with `to` set to `"/courses"`.
+// 8. After the `if` statement, return a `<section>` containing:
+//    - An `<h1>` displaying `selectedCourse.title`.
+//    - A paragraph displaying **Duration:** followed by `selectedCourse.duration`.
+//    - A `Link` displaying **Back to courses**, with `to` set to `"/courses"`.
+// 9. Export `CourseDetails` as the default export.
+// 10. In `App.tsx`, confirm that your existing dynamic route uses the path `"/courses/:courseId"` and renders `<CourseDetails />`.
+// 11. Save your files and test these URLs:
+
+//    | URL             | Expected display                      |
+//    |-----------------|---------------------------------------|
+//    | `/courses/html` | HTML Fundamentals — Duration: 2 weeks |
+//    | `/courses/css`  | CSS Styling — Duration: 3 weeks |
+//    | `/courses/react` | React Development — Duration: 4 weeks |
+//    | `/courses/python` | Course not found |
+
+// 12. Click *Back to courses* and confirm that it takes you to `/courses`.
+
+// Expected outcome: One `CourseDetails` component displays the matching course’s information based on the URL. If no course matches, it displays **Course not found.
+
+import { Link, useParams } from "react-router";
+
+const CourseDetails = () => {
+  const { courseId } = useParams();
+
+  const courses = [
+    { id: "html", title: "HTML Fundamentals", duration: "2 weeks" },
+    { id: "css", title: "CSS Styling", duration: "3 weeks" },
+    { id: "react", title: "React Development", duration: "4 weeks" },
+  ];
+
+  const selectedCourse = courses.find(
+    (course) => course.id === courseId
+  );
+
+  if (!selectedCourse) {
+    return (
+      <section>
+        <h1>Course not found</h1>
+        <Link to="/courses">Back to courses</Link>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      <h1>{selectedCourse.title}</h1>
+      <p>Duration: {selectedCourse.duration}</p>
+      <Link to="/courses">Back to courses</Link>
+    </section>
+  );
+};
+
+export default CourseDetails;
+
+--------------
+========Explanation of the process========
+1. `useParams()` reads the course ID.
+2. `.find()` looks for a course with that ID.
+3. If a course exists, its details appear.
+4. Otherwise, the component displays **Course not found.
+
+
+========ROUTE PARAMETER VALUES=========
+Route parameter values are strings when present. If your data uses numeric IDs, convert or compare appropriately:
+course.id === Number(courseId)
+---------------
+Practice task — Add TypeScript
+1. Open `Courses.tsx`.
+2. Add a link to `/courses/typescript`.
+3. Use the link text **View TypeScript**.
+4. Open `CourseDetails.tsx`.
+5. Add a course object with:
+   - `id`: `"typescript"`
+   - `title`: `"TypeScript Essentials"`
+   - `duration`: `"2 weeks"`
+6. Click the new link.
+7. Visit `/courses/unknown`.
+
+Expected outcome:** TypeScript details appear for its link; the unknown ID shows Course not found.
+----------
+
+
+=========NESTED ROUTES=========
+7. Nested routes
+Nested routes allow a child page to appear inside a parent layout.
+For example, a dashboard can contain:
+
+- A heading that remains visible.
+- Dashboard navigation that remains visible.
+- A changing area for Profile or Settings.
+-------------------------------------------------------------
+| URL                   | Parent layout | Content inside it |
+|-----------------------|---------------|-------------------|
+| `/dashboard`          | Dashboard     | Overview          |
+| `/dashboard/profile`  | Dashboard     | Profile           |
+| `/dashboard/settings` | Dashboard     | Settings          |
+-------------------------------------------------------------
+
+The parent component uses `Outlet` to mark where the matched child component appears. An index route supplies the default child at the parent URL.
+
+
+-------------
+// Guided Task 7 — Create a Dashboard Layout
+
+// Create a shared layout for the dashboard’s Overview, Profile, and Settings pages.
+
+// 1. Inside `src`, create a folder named `layouts`.
+// 2. Inside `src/layouts`, create `DashboardLayout.tsx`.
+// 3. Import `Link` and `Outlet` from `"react-router"`.
+// 4. Create an arrow function component named `DashboardLayout`.
+// 5. Make the component return a `<section>`.
+// 6. Inside the section, add an `<h1>` displaying **Student Dashboard**.
+// 7. Below the heading, add a `<nav>` with `aria-label="Dashboard navigation"`.
+// 8. Inside the navigation, add a `<ul>` containing three `<li>` elements. Each list item should contain a `Link`:
+
+//    | Link text | `to` value |
+//    |---|---|
+//    | Overview | `"/dashboard"` |
+//    | Profile | `"/dashboard/profile"` |
+//    | Settings | `"/dashboard/settings"` |
+
+// 9. Below the navigation, add an `<hr />`.
+// 10. Below the horizontal line, render `<Outlet />`. This is where the matching nested page will appear.
+// 11. Export `DashboardLayout` as the default export.
+
+// Expected outcome:** You have a reusable dashboard layout containing a heading, navigation links, and a space for nested pages. Once you configure the nested routes, the heading and navigation stay visible while the content inside `<Outlet />` changes.
+
+
+
+// IN APP.tsx
+// import `DashboardLayout` into `App.tsx` and give it a route. Its nested routes determine what appears inside `<Outlet />`.
+
+// Add this import:
+
+// import DashboardLayout from "./layouts/DashboardLayout";
+
+
+// Then add the following inside your existing `<Routes>`:
+// <Route path="/dashboard" element={<DashboardLayout />}>
+//   <Route index element={<p>Welcome to your dashboard.</p>} />
+//   <Route path="profile" element={<p>Your student profile.</p>} />
+//   <Route path="settings" element={<p>Your account settings.</p>} />
+// </Route>
+
+
+// | URL                   | Content displayed inside `<Outlet />` |
+// |-----------------------|---------------------------------------|
+// | `/dashboard`          | Welcome to your dashboard.            |
+// | `/dashboard/profile`  | Your student profile.                 |
+// | `/dashboard/settings` | Your account settings.                |
+
+// The Student Dashboard heading and dashboard navigation remain visible on all three pages.
+
+// Notice that:
+
+// - `index` makes Overview the default content at `/dashboard`.
+// - The nested paths `"profile"` and `"settings"` extend the parent path `"/dashboard"`.
+
+// You can later replace the paragraphs with separate page components:
+
+
+// <Route path="/dashboard" element={<DashboardLayout />}>
+//   <Route index element={<DashboardOverview />} />
+//   <Route path="profile" element={<DashboardProfile />} />
+//   <Route path="settings" element={<DashboardSettings />} />
+// </Route>
+
+
+===Explanation of the route group===
+<Route path="/dashboard" element={<DashboardLayout />}>
+Defines the parent route.
+
+
+<Route index element={<DashboardHome />} />
+Displays the overview at `/dashboard`.
+
+
+<Route path="profile" element={<Profile />} />
+Adds `profile` to the parent path, producing `/dashboard/profile`.
+
+Expected outcome:** Profile and Settings appear where `<Outlet />` sits. The dashboard heading and links stay visible.
+
+
+======REDIRECTING USERS=====
+8. Redirecting users
+A redirect sends someone from one location to another automatically.
+
+Examples include:
+- Sending an old page address to its replacement.
+- Sending a user to a confirmation page after completing an action.
+
+For this lesson, we will use:
+------------------------------------------------------------------
+| Tool            | Use                                          |
+|-----------------|----------------------------------------------|
+| `<Navigate />`  | Navigate when a component is rendered        |
+| `useNavigate()` | Navigate from code, such as an event handler |
+------------------------------------------------------------------
+
+useNavigate() is a React Router hook that lets you move to another page using JavaScript, usually after an action such as submitting a form.
+
+In this use case, use <Link> for navigation links; use navigate() when navigation follows an action in your code.
+
+   Guided task 10 — Redirect an old URL
+Suppose `/all-courses` was the old address for `/courses`.
+1. Open `App.tsx`.
+2. Add `Navigate` to the router import:
+import { Routes, Route, Navigate } from "react-router";
+3. Add this route inside `Routes`:
+<Route
+  path="/all-courses"
+  element={<Navigate to="/courses" replace />}
+/>
+
+4. Visit `/all-courses`.
+Expected outcome: The URL changes to `/courses`, and the Courses page appears.
+
+`replace` replaces the current browser history entry, so the old URL does not remain as an extra Back-button step.
+
+
+
+---------------
+Questions
+Guided Task — Complete a Workshop Registration
+
+Create two simple pages to demonstrate using `useNavigate()` to open another page after an action.
+
+Page 1 — `Registration.tsx`
+
+1. Inside `src/pages`, create `Registration.tsx`.
+2. Import `useNavigate` from `"react-router"`.
+3. Create a function component named `Registration`.
+4. Inside the component, call `useNavigate()` and store the returned function in `navigate`.
+5. Create a named function called `handleRegistration`.
+6. Inside the function:
+   - Display **Registration completed!** using `console.log()`.
+   - Call `navigate("/registration-success")`.
+7. Return a `<section>` containing:
+   - An `<h1>` displaying **Workshop Registration**.
+   - A paragraph displaying **Click the button to complete your registration.**
+   - A button displaying **Complete Registration**.
+8. Give the button `type="button"` and connect `handleRegistration` to its `onClick`.
+9. Export `Registration` as the default export.
+
+Page 2 — `RegistrationSuccess.tsx`
+
+1. Inside `src/pages`, create `RegistrationSuccess.tsx`.
+2. Import `Link` from `"react-router"`.
+3. Create a function component named `RegistrationSuccess`.
+4. Return a `<section>` containing:
+   - An `<h1>` displaying **Registration Successful!**
+   - A paragraph displaying **You have registered for the coding workshop.
+   - A `Link` displaying **Back to Registration**, pointing to `/registration`.
+5. Export `RegistrationSuccess` as the default export.
+
+Connect and test the pages
+
+1. Ensure `<App />` is wrapped in `<BrowserRouter>` in `main.tsx`.
+2. In `App.tsx`, import both pages and import `Routes` and `Route` from `"react-router"`.
+3. Add these routes:
+
+| Path                    | Component |
+|-------------------------|---|
+| `/registration`         | `Registration` |
+| `/registration-success` | `RegistrationSuccess` |
+
+4. Open `/registration` and the browser console.
+5. Click Complete Registration.
+
+Expected outcome: The click runs `handleRegistration`, logs Registration completed!**, and then opens the success page. Clicking Back to Registration returns to the first page.
+
