@@ -1,0 +1,148 @@
+Frontend Project Development, covers:
+1. Planning a frontend application — deciding what the application should do, its pages, and its user journeys.
+2. Component architecture — dividing the interface into reusable components, such as navigation bars, cards, and forms.
+3. State management — managing data that changes, such as form values, login status, and saved properties.
+4. API integration — fetching and sending data between the frontend and a backend.
+5. Responsive design — making layouts work across mobile, tablet, and desktop screens.
+6. Code organisation — arranging files into clear folders for pages, components, hooks, and other resources.
+7. Project optimisation — improving performance, including using useMemo where an expensive calculation benefits from caching.
+
+
+
+=========PROPERTY FILTERING EXERCISE
+// Practice Task — Display and Filter Properties Using Data Inside the Page File**
+
+// Use your existing React and TypeScript project with Tailwind CSS configured.
+=======
+A. Plan the page**
+
+Build a page where users can:
+
+- View available properties.
+- Filter properties by location.
+- See how many properties match their selection.
+
+Before coding, sketch a heading, a location dropdown, and a property cards section.
+
+B. Organise your files
+
+Inside `src`, create:
+components/PropertyCard.tsx
+pages/PropertyPage.tsx
+types/Property.ts
+======
+// 1. Define the property type
+
+// Inside `src/types/Property.ts`, create and export an interface named `Property` containing:
+
+// | Property | Type |
+// |---|---|
+// | `id` | `number` |
+// | `title` | `string` |
+// | `location` | `string` |
+// | `price` | `number` |
+
+// 2. Create the property card
+// Inside `src/components/PropertyCard.tsx`:
+// 1. Import the `Property` interface using `import type`.
+// 2. Define an interface named `PropertyCardProps` containing `property`, typed as `Property`.
+// 3. Create a component named `PropertyCard` that receives and destructures the `property` prop.
+// 4. Return an `<article>` displaying:
+//    - The property title in an `<h2>`.
+//    - The location in a paragraph.
+//    - **Price: ₦** followed by `{property.price.toLocaleString("en-NG")}`.
+// 5. Give the article `className="rounded-lg bg-gray-100 p-5"`.
+// 6. Export `PropertyCard` as the default export.
+
+// 3. Create the page and its data
+
+// Inside `src/pages/PropertyPage.tsx`:
+
+// 1. Import `useState` from `"react"`.
+// 2. Import `PropertyCard` from `"../components/PropertyCard"`.
+// 3. Import the `Property` interface using:
+//    import type { Property } from "../types/Property";
+
+// 4. Below the imports, **before the component**, create an array named `properties`, typed as `Property[]`, containing:
+
+//    | id | title | location | price |
+//    |---|---|---|---|
+//    | 1 | Two Bedroom Flat | Ikeja | 3000000 |
+//    | 2 | Three Bedroom Apartment | Lekki | 5000000 |
+//    | 3 | Studio Apartment | Ikeja | 1500000 |
+
+// 5. Write the prices as numbers without quotation marks.
+// 6. Create an arrow function component named `PropertyPage`.
+
+// The data is already available in this file, so this task does not require `fetch()` or `useEffect`.
+
+// 4. Create the filter state==
+
+// Inside `PropertyPage`, use `useState("")` to create:
+
+// - A state variable named `selectedLocation`.
+// - Its setter named `setSelectedLocation`.
+
+// The empty string represents **All locations**.
+
+// 5. Calculate the matching properties
+// Below the state declaration, create a variable named `filteredProperties`.
+
+// Use a ternary expression:
+// 1. Check whether `selectedLocation === ""`.
+// 2. If true, use the complete `properties` array.
+// 3. Otherwise, use `properties.filter()`.
+// 4. Name the callback parameter `property`.
+// 5. Keep properties where `property.location === selectedLocation`.
+
+// 6. Create the page content**
+// Return a `<section>` with `className="p-6"`.
+// Inside it, add:
+// 1. An `<h1>` displaying **Find Your Next Home**.
+// 2. A label displaying **Filter by location**, with `htmlFor="locationFilter"`.
+// 3. A `<select>` with:
+//    - `id="locationFilter"`.
+//    - `value={selectedLocation}`.
+//    - This inline arrow function:
+
+//    onChange={(event) =>
+//      setSelectedLocation(event.currentTarget.value)
+//    }
+
+// 4. Add these options inside the select:
+//    | Displayed text | Value |
+//    |---------------|---|
+//    | All locations | `""` |
+//    | Ikeja | `"Ikeja"` |
+//    | Lekki | `"Lekki"` |
+
+// 7. Display the property cards
+
+// Below the dropdown:
+
+// 1. Add a paragraph displaying **Properties found:** followed by `{filteredProperties.length}`.
+// 2. Add a `<div>` with:
+
+//    className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
+
+// 3. Inside the div, use `filteredProperties.map()` with `property` as the callback parameter.
+// 4. Return a `<PropertyCard />` for each object, passing:
+//    - `key={property.id}`.
+//    - `property={property}`.
+// 5. Export `PropertyPage` as the default export.
+
+// 8. Display and test the page**
+
+// 1. In `App.tsx`, import `PropertyPage` from `"./pages/PropertyPage"`.
+// 2. Render `<PropertyPage />` inside `<main>`.
+// 3. Start the development server and test the dropdown.
+
+// Expected outcome:
+
+// | Selected location | Properties displayed |
+// |---------------|---:|
+// | All locations | 3 |
+// | Ikeja         | 2 |
+// | Lekki         | 1 |
+
+// Extra: Add another property object with a unique `id` and location `"Lekki"`. Confirm that the total and filtered results update automatically.
